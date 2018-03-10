@@ -1,0 +1,32 @@
+<html xmlns="http://www.w3.org/1999/xhtml" 
+		xmlns:th="http://www.thymeleaf.org">
+
+<h1>All Films</h1>
+
+<body>
+<section th:fragment="tickets">
+    <div>
+        <table>
+            <tr>
+				<th>Name</th>
+				<th>Projection</th>
+				<th>Seat</th>
+				<th>Price</th>
+				<th></th>
+            </tr>
+            <th:block th:each="ticket : ${tickets}">
+                <tr>
+                    <td th:text="${ticket.name}"></td>
+                    <td th:text="${ticket.projectionStart}"></td>
+                    <td th:text="${ticket.seat}"></td>
+                    <td th:text="${ticket.price}"></td>
+                    <td>
+                        <button th:onclick="'location.href = \'' + @{'/cart/addTicket/{id}'(id=${ticket.id})} + '\''" class="edit" th:if="${ticket.seat}>0">Buy</button>
+                    </td>
+                </tr>
+            </th:block>
+        </table>
+    </div>
+</section>
+</body>
+</html>

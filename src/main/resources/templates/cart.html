@@ -1,0 +1,41 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/header :: header"></div>
+</head>
+<h1>Order Tickets</h1>
+
+<body>
+<div class="cancel" th:if="${outOfStockMessage}" th:utext="${outOfStockMessage}"></div>
+<section th:fragment="tickets">
+    <th:block th:each="ticket : ${tickets.entrySet()}">
+        <div>
+        <table>
+            <tr>
+                <td><a th:text="${ticket.getKey().name}" th:href="@{'/cart/' + ${ticket.getKey().id}}">Film Name</a></td>
+                <td th:text="${ticket.getKey().projectionStart}">Projection</td>
+                <td th:text="${ticket.getKey().seat}">Seat</td>
+                <div th:inline="text" class="col-md-2">Price: [[${ticket.getKey().price}]] BGN</div>
+                <div th:inline="text" class="col-md-9">Quantity: [[${ticket.getValue()}]]</div>
+                <a th:href="@{'/cart/removeTicket/{id}'(id=${ticket.getKey().id})}">
+                    <button type="button" class="delete" th:text="Remove">Remove</button>
+                </a>
+            </tr>
+        </table>
+            <br><br/>
+            </div>
+    </th:block>
+</section>
+<section>
+<div>
+    <h2 class="col-md-11" th:inline="text">Total: [[${total}]] BGN</h2>
+    <a th:href="@{'/cart/checkout'}" class="col-md-1">
+        <button type="button" class="add-new" th:text="Checkout">Checkout</button>
+    </a>
+</div>
+</section>
+<div>
+    <button type="button" th:onclick="'location.href = \'' + @{/home} + '\''" class="edit">Back</button>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
